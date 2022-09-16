@@ -56,8 +56,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
-        redis-version: ["6.2", "7.0", "7.2", "latest"]
+        python-version: ["3.11"]
+        redis-version: ["7.0",]
         test_params: ["-m '(not (keydb or dragonfly))'"]
         uvloop: ["True", "False"]
         orjson: ["False"]
@@ -78,7 +78,7 @@ jobs:
             redis-version: "7.0"
             test_params: "-m dragonfly"
             label: "Dragonfly"
-          - python-version: "pypy-3.9"
+          - python-version: "3.9"
             redis-version: "7.0"
             test_params: "-m '(not (keydb or dragonfly))' tests/commands tests/test_tracking_cache.py"
             runtime_type_checks: "False"
@@ -117,19 +117,20 @@ jobs:
     - name: Tests
       env:
         COREDIS_UVLOOP: ${{ matrix.uvloop }}
+        TMNET_API_KEY: ${{ secrets.TMNET_API_KEY }}
         HOST_OS: linux
         CI: "True"
         COREDIS_REDIS_VERSION: ${{matrix.redis-version}}
         COREDIS_RUNTIME_CHECKS: ${{matrix.runtime_type_checks}}
-        PYTEST_SENTRY_DSN: ${{ matrix.extensions != 'True' && secrets.SENTRY_DSN || ''}}
       run: |
         echo "Runtime checks: $COREDIS_RUNTIME_CHECKS"
         echo "UVLoop: $COREDIS_UVLOOP"
         echo "CI: $CI"
-        pytest -q --reverse --reruns 2 --cov=coredis --cov-report=xml ${{ matrix.test_params }}
+        pytest --tmnet --testmon-noselect -q --reverse --reruns 2 --cov=coredis --cov-report=xml ${{ matrix.test_params }}
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
   generate_wheels_matrix:
+    if: false
     name: Generate wheels matrix
     runs-on: ubuntu-latest
     outputs:
@@ -158,6 +159,7 @@ jobs:
           CIBW_ARCHS_MACOS: auto arm64
           CIBW_SKIP: '*musllinux* pp*'
   build_wheels:
+    if: false
     needs: [generate_wheels_matrix]
     name: Build wheel on ${{ matrix.only }}
     runs-on: ${{ matrix.os }}
@@ -186,6 +188,7 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
   build_pure_wheel:
+    if: false
     needs: [lint]
     name: Build pure python wheel
     runs-on: ubuntu-20.04
@@ -201,6 +204,7 @@ jobs:
         with:
           path: ./dist/*.whl
   build_sdist:
+    if: false
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
@@ -216,7 +220,7 @@ jobs:
   upload_pypi:
     needs: [test, build_wheels, build_pure_wheel, build_sdist]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: false && github.ref == 'refs/heads/master'
     steps:
       - uses: actions/download-artifact@v2
         with:
@@ -231,7 +235,7 @@ jobs:
   upload_pypi_release:
     needs: [test, build_wheels, build_sdist]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    if: false && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/download-artifact@v2
         with:
@@ -247,7 +251,7 @@ jobs:
     needs: [upload_pypi_release]
     name: Create Release
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    if: false && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
