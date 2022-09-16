@@ -90,6 +90,7 @@ dev = [
 ci = [
   "pytest-rerunfailures",
   "pytest-sentry",
+  "pytest-testmon",
   {include-group = "dev"},
 ]
 
