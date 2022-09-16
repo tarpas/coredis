@@ -11,4 +11,5 @@ pytest-env
 pytest-lazy-fixture
 pytest-mock
 pytest-reverse
+pytest-testmon==1.4.0b0
 redis
