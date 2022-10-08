@@ -101,6 +101,7 @@ jobs:
         pip install uvloop
     - name: Tests
       env:
+        PYTEST_SENTRY_DSN: https://d93fc211ee89426dbecf3511c9cb1c25@o4503947613306880.ingest.sentry.io/4503947625824256
         COREDIS_UVLOOP: ${{ matrix.uvloop }}
         HOST_OS: linux
         CI: "True"
