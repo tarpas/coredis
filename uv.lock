@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.11'",
@@ -513,6 +513,7 @@ ci = [
     { name = "pytest-rerunfailures" },
     { name = "pytest-reverse" },
     { name = "pytest-sentry" },
+    { name = "pytest-testmon" },
     { name = "redis" },
     { name = "ruff" },
     { name = "types-deprecated" },
@@ -642,6 +643,7 @@ ci = [
     { name = "pytest-rerunfailures" },
     { name = "pytest-reverse" },
     { name = "pytest-sentry" },
+    { name = "pytest-testmon" },
     { name = "redis" },
     { name = "redis", specifier = ">=4.2.0" },
     { name = "ruff" },
@@ -2034,6 +2036,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/66/44/dbe8420883c6bd89247339f521580ae9c91838bfee0159d5183161063483/pytest_sentry-0.3.3.tar.gz", hash = "sha256:c14ff1b0a00fb62fb83c9523fe03ee00896ac61829a3b20a7a57b1d4524e3336", size = 9346, upload-time = "2025-02-24T18:20:28.74Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8e/4f/ebacd5c58186bad0f61312771ed344448dd4e9967ef627f31b5b7ac85d92/pytest_sentry-0.3.3-py3-none-any.whl", hash = "sha256:acf2b76cf5eb3213371f5d29868dab0e35e0653012d5e87af9da82f043cdfb87", size = 8514, upload-time = "2025-02-24T18:20:27.042Z" },
+]
+
+[[package]]
+name = "pytest-testmon"
+version = "2.1.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "coverage" },
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a8/51/2ba046215da53d10add6db331811b1e0d43cd17874bf1cb066fcab92f586/pytest_testmon-2.1.4.tar.gz", hash = "sha256:cc3dd31f9bf30f6ec11c5153da3c606df7545f3cd90bfb90ce6bd4c48e717aaf", size = 22322, upload-time = "2025-11-07T13:27:55.1Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/14/3f/ca0c171e0b67b80a7faa8fd02b62a08e81b7efc2f25b2adac2f6d0be8d03/pytest_testmon-2.1.4-py3-none-any.whl", hash = "sha256:3d1178b455a727c94dde85228a34b7ef857751ba142c15874df82d8876e31194", size = 24550, upload-time = "2025-11-07T13:27:44.08Z" },
 ]
 
 [[package]]
